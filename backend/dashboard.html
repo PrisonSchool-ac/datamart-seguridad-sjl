@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad SJL | Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --fondo: #0b1220;
+            --panel: #121d30;
+            --panel2: #172337;
+            --borde: #263449;
+            --texto: #f1f5f9;
+            --suave: #94a3b8;
+            --cian: #22d3ee;
+            --verde: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--fondo);
+            color: var(--texto);
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 245px minmax(0, 1fr);
+            min-height: 100vh;
+        }
+
+        aside {
+            background: #0e1727;
+            border-right: 1px solid var(--borde);
+            padding: 25px 17px;
+        }
+
+        .marca {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 4px 8px 28px;
+        }
+
+        .logo {
+            display: grid;
+            place-items: center;
+            width: 43px;
+            height: 43px;
+            background: #164e63;
+            border-radius: 13px;
+            font-size: 23px;
+        }
+
+        .marca h2 {
+            margin: 0;
+            font-size: 17px;
+            letter-spacing: 1px;
+        }
+
+        .marca small {
+            display: block;
+            color: var(--suave);
+            margin-top: 5px;
+        }
+
+        .etiqueta-menu {
+            color: #64748b;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin: 18px 10px 10px;
+        }
+
+        .menu {
+            display: block;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 9px;
+            color: #a9b8cb;
+            text-decoration: none;
+        }
+
+        .menu:hover,
+        .menu.activo {
+            color: #67e8f9;
+            background: #123244;
+        }
+
+        main {
+            min-width: 0;
+        }
+
+        .barra-superior {
+            min-height: 82px;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .barra-superior h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .barra-superior p {
+            color: var(--suave);
+            font-size: 13px;
+            margin: 6px 0 0;
+        }
+
+        .estado {
+            color: #fcd34d;
+            background: #3c3018;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .contenido {
+            padding: 28px 32px;
+        }
+
+        .titulo-seccion {
+            margin: 0 0 7px;
+            font-size: 20px;
+        }
+
+        .descripcion {
+            color: var(--suave);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 22px;
+        }
+
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: end;
+            gap: 14px;
+            background: var(--panel);
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            padding: 19px;
+            margin-bottom: 22px;
+        }
+
+        .campo {
+            min-width: 190px;
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: #b6c4d6;
+            margin-bottom: 9px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            background: #0b1220;
+            color: white;
+            border: 1px solid #35445a;
+            border-radius: 8px;
+            padding: 11px;
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 12px 17px;
+            background: #0891b2;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0e7490;
+        }
+
+        button:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        .boton-secundario {
+            background: #334155;
+        }
+
+        .boton-secundario:hover {
+            background: #475569;
+        }
+
+        .indicadores {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .tarjeta {
+            background: var(--panel);
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            padding: 20px;
+            min-width: 0;
+        }
+
+        .tarjeta-cabecera {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tarjeta-titulo {
+            color: #a9b8cb;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .icono {
+            display: grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #173247;
+            color: var(--cian);
+            font-size: 19px;
+        }
+
+        .numero {
+            font-size: 30px;
+            font-weight: 700;
+            margin-top: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .nota {
+            color: var(--suave);
+            font-size: 11px;
+            margin-top: 7px;
+            line-height: 1.5;
+        }
+
+        .rejilla {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            padding: 22px;
+            min-width: 0;
+            margin-bottom: 20px;
+        }
+
+        .panel h3 {
+            margin: 0 0 7px;
+            font-size: 16px;
+        }
+
+        .panel-subtitulo {
+            color: var(--suave);
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .grafica {
+            position: relative;
+            height: 320px;
+        }
+
+        .lista-zonas {
+            display: grid;
+            gap: 21px;
+        }
+
+        .zona-fila {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        .zona-fila span:first-child {
+            color: #cbd5e1;
+        }
+
+        .pista {
+            height: 7px;
+            background: #29364a;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .relleno {
+            height: 100%;
+            border-radius: 20px;
+            transition: width .3s;
+        }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--borde);
+            text-align: left;
+        }
+
+        th {
+            color: var(--suave);
+            font-weight: 500;
+        }
+
+        td {
+            color: #e2e8f0;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #173d35;
+            color: #6ee7b7;
+            font-size: 11px;
+        }
+
+        .pill.futura {
+            background: #172554;
+            color: #93c5fd;
+        }
+
+        .advertencia {
+            margin-top: 20px;
+            padding: 16px;
+            border: 1px solid #665020;
+            background: #2c2618;
+            color: #fcd34d;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        #mensaje,
+        #estadoMetricas,
+        #estadoDelitos {
+            min-height: 20px;
+            color: #67e8f9;
+            font-size: 12px;
+            line-height: 1.6;
+            margin: 15px 0 0;
+        }
+
+        #mensaje.error,
+        #estadoMetricas.error,
+        #estadoDelitos.error {
+            color: #fca5a5;
+        }
+
+        .metricas-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .metrica-modelo {
+            background: var(--panel2);
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            padding: 17px;
+            min-width: 0;
+        }
+
+        .metrica-modelo .nombre {
+            color: #a9b8cb;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .metrica-modelo .valor {
+            margin-top: 10px;
+            font-size: 25px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .metrica-modelo .detalle {
+            color: var(--suave);
+            font-size: 11px;
+            line-height: 1.5;
+            margin-top: 7px;
+        }
+
+        footer {
+            color: #64748b;
+            text-align: center;
+            font-size: 11px;
+            line-height: 1.7;
+            padding: 25px 0 5px;
+        }
+
+        @media (max-width: 1100px) {
+            .indicadores,
+            .metricas-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .rejilla {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            aside {
+                padding: 14px;
+                border-right: 0;
+                border-bottom: 1px solid var(--borde);
+            }
+
+            .marca {
+                padding-bottom: 12px;
+            }
+
+            .etiqueta-menu {
+                display: none;
+            }
+
+            .menu {
+                display: inline-block;
+                margin: 4px;
+                padding: 9px;
+                font-size: 12px;
+            }
+
+            .barra-superior {
+                padding: 18px;
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .barra-superior h1 {
+                font-size: 18px;
+            }
+
+            .estado {
+                font-size: 10px;
+            }
+
+            .contenido {
+                padding: 20px 14px;
+            }
+
+            .indicadores,
+            .metricas-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .tarjeta,
+            .metrica-modelo {
+                padding: 14px;
+            }
+
+            .numero {
+                font-size: 25px;
+            }
+
+            .metrica-modelo .valor {
+                font-size: 22px;
+            }
+
+            .panel {
+                padding: 16px;
+            }
+
+            .grafica {
+                height: 280px;
+            }
+
+            .campo {
+                width: 100%;
+            }
+
+            .filtros button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="layout">
+
+    <aside>
+        <div class="marca">
+            <div class="logo">⌖</div>
+            <div>
+                <h2>SEGURIDAD SJL</h2>
+                <small>DataMart Analytics</small>
+            </div>
+        </div>
+
+        <div class="etiqueta-menu">PRINCIPAL</div>
+        <a class="menu activo" href="#inicio">▦ &nbsp; Resumen general</a>
+        <a class="menu" href="#comparacion">▥ &nbsp; Comparación por zona</a>
+        <a class="menu" href="#comparacion-estimaciones">▤ &nbsp; Comparación de estimaciones</a>
+        <a class="menu" href="#resultados">☷ &nbsp; Tabla de resultados</a>
+        <a class="menu" href="#metricas">∑ &nbsp; Evaluación del modelo</a>
+
+        <div class="etiqueta-menu">ANÁLISIS ADICIONAL</div>
+        <a class="menu" href="#analisis-delitos">▤ &nbsp; Análisis de delitos</a>
+
+        <div class="etiqueta-menu">SISTEMA</div>
+        <a class="menu"
+           href="http://127.0.0.1:8000/docs"
+           target="_blank"
+           rel="noopener">↗ &nbsp; Documentación API</a>
+    </aside>
+
+    <main id="inicio">
+        <div class="barra-superior">
+            <div>
+                <h1>Dashboard de Seguridad</h1>
+                <p>San Juan de Lurigancho · Panel de análisis</p>
+            </div>
+            <span class="estado">● DATOS SIMULADOS</span>
+        </div>
+
+        <div class="contenido">
+
+            <!-- RESUMEN ORIGINAL -->
+            <h2 class="titulo-seccion">Resumen general</h2>
+            <p class="descripcion">
+                Consulta y compara las estimaciones generadas por el modelo
+                para las cinco zonas del proyecto.
+            </p>
+
+            <section class="filtros">
+                <div class="campo">
+                    <label for="fecha">FECHA DE CONSULTA</label>
+                    <input type="date" id="fecha" value="2026-10-27">
+                </div>
+                <button id="consultar" type="button">
+                    ↻ &nbsp; Consultar estimaciones
+                </button>
+            </section>
+
+            <section class="indicadores">
+                <div class="tarjeta">
+                    <div class="tarjeta-cabecera">
+                        <span class="tarjeta-titulo">Zonas consultadas</span>
+                        <span class="icono">⌖</span>
+                    </div>
+                    <div class="numero" id="totalZonas">—</div>
+                    <div class="nota">Zonas incluidas en la consulta</div>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="tarjeta-cabecera">
+                        <span class="tarjeta-titulo">Cantidad estimada</span>
+                        <span class="icono">▥</span>
+                    </div>
+                    <div class="numero" id="totalEstimado">—</div>
+                    <div class="nota">Suma de cantidades enteras</div>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="tarjeta-cabecera">
+                        <span class="tarjeta-titulo">Suma decimal</span>
+                        <span class="icono">∑</span>
+                    </div>
+                    <div class="numero" id="totalDecimal">—</div>
+                    <div class="nota">Suma de las salidas decimales</div>
+                </div>
+
+                <div class="tarjeta">
+                    <div class="tarjeta-cabecera">
+                        <span class="tarjeta-titulo">Fecha consultada</span>
+                        <span class="icono">▦</span>
+                    </div>
+                    <div class="numero" id="fechaResultado"
+                         style="font-size:20px">—</div>
+                    <div class="nota">Fecha seleccionada</div>
+                </div>
+            </section>
+
+            <section class="rejilla" id="comparacion">
+                <div class="panel">
+                    <h3>Comparación por zona</h3>
+                    <div class="panel-subtitulo">
+                        Cantidad entera estimada para la fecha seleccionada
+                    </div>
+                    <div class="grafica">
+                        <canvas id="graficaZonas"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>Distribución por zona</h3>
+                    <div class="panel-subtitulo">
+                        Vista relativa de las cantidades estimadas
+                    </div>
+                    <div id="listaZonas" class="lista-zonas">
+                        <p class="panel-subtitulo">Consultando datos...</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="comparacion-estimaciones">
+                <h3>Comparación de estimaciones enteras y decimales</h3>
+                <div class="panel-subtitulo">
+                    Comparación de la cantidad entera presentada y el valor
+                    decimal generado por el modelo para cada zona.
+                </div>
+                <div class="grafica">
+                    <canvas id="graficaComparativa"></canvas>
+                </div>
+            </section>
+
+            <section class="panel" id="resultados">
+                <h3>Detalle de estimaciones</h3>
+                <div class="panel-subtitulo">Resultados devueltos por la API</div>
+
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Zona</th>
+                                <th>Cantidad estimada</th>
+                                <th>Estimación decimal</th>
+                                <th>Período de entrenamiento</th>
+                                <th>Estado de fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaResultados">
+                            <tr>
+                                <td colspan="5">Esperando datos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p id="mensaje" role="status" aria-live="polite"></p>
+            </section>
+
+            <!-- MÉTRICAS ORIGINALES -->
+            <section class="panel" id="metricas">
+                <h3>Evaluación del modelo de predicción</h3>
+                <div class="panel-subtitulo">
+                    Métricas obtenidas durante la evaluación del modelo.
+                </div>
+
+                <div class="metricas-grid">
+                    <div class="metrica-modelo">
+                        <div class="nombre">MAE</div>
+                        <div class="valor" id="metricaMAE">—</div>
+                        <div class="detalle">Error absoluto medio.</div>
+                    </div>
+
+                    <div class="metrica-modelo">
+                        <div class="nombre">RMSE</div>
+                        <div class="valor" id="metricaRMSE">—</div>
+                        <div class="detalle">Raíz del error cuadrático medio.</div>
+                    </div>
+
+                    <div class="metrica-modelo">
+                        <div class="nombre">Filas de entrenamiento</div>
+                        <div class="valor" id="filasEntrenamiento">—</div>
+                        <div class="detalle">Registros usados para ajustar el modelo.</div>
+                    </div>
+
+                    <div class="metrica-modelo">
+                        <div class="nombre">Filas de evaluación</div>
+                        <div class="valor" id="filasEvaluacion">—</div>
+                        <div class="detalle">Registros utilizados para calcular las métricas.</div>
+                    </div>
+                </div>
+
+                <p id="estadoMetricas" role="status" aria-live="polite">
+                    Consultando métricas del modelo...
+                </p>
+
+                <p class="nota">
+                    Última fecha disponible en los datos:
+                    <strong id="fechaUltima">—</strong>
+                </p>
+            </section>
+
+            <!-- PANEL NUEVO AGREGADO -->
+            <section class="panel" id="analisis-delitos">
+                <h3>Panel de análisis de delitos por tipo y zona geográfica</h3>
+
+                <div class="panel-subtitulo">
+                    Consulta y compara la cantidad de delitos agrupados por
+                    tipo de delito y zona geográfica. Puedes usar uno o ambos filtros.
+                </div>
+
+                <section class="filtros">
+                    <div class="campo">
+                        <label for="filtroTipoDelito">TIPO DE DELITO</label>
+                        <select id="filtroTipoDelito">
+                            <option value="">Todos los delitos</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="filtroZona">ZONA GEOGRÁFICA</label>
+                        <select id="filtroZona">
+                            <option value="">Todas las zonas</option>
+                        </select>
+                    </div>
+
+                    <button id="btnFiltrarDelitos" type="button">
+                        Aplicar filtros
+                    </button>
+
+                    <button id="btnLimpiarDelitos"
+                            class="boton-secundario"
+                            type="button">
+                        Limpiar
+                    </button>
+                </section>
+
+                <div id="estadoDelitos" role="status" aria-live="polite">
+                    Cargando opciones de filtros...
+                </div>
+
+                <section class="indicadores">
+                    <div class="tarjeta">
+                        <div class="tarjeta-cabecera">
+                            <span class="tarjeta-titulo">Total de delitos</span>
+                            <span class="icono">▦</span>
+                        </div>
+                        <div class="numero" id="totalDelitosPanel">—</div>
+                        <div class="nota">Suma de las cantidades encontradas</div>
+                    </div>
+
+                    <div class="tarjeta">
+                        <div class="tarjeta-cabecera">
+                            <span class="tarjeta-titulo">Combinaciones tipo-zona</span>
+                            <span class="icono">▥</span>
+                        </div>
+                        <div class="numero" id="totalCombinacionesPanel">—</div>
+                        <div class="nota">Combinaciones devueltas por la consulta</div>
+                    </div>
+
+                    <div class="tarjeta">
+                        <div class="tarjeta-cabecera">
+                            <span class="tarjeta-titulo">Tipos encontrados</span>
+                            <span class="icono">∑</span>
+                        </div>
+                        <div class="numero" id="totalTiposPanel">—</div>
+                        <div class="nota">Tipos distintos en los resultados filtrados</div>
+                    </div>
+
+                    <div class="tarjeta">
+                        <div class="tarjeta-cabecera">
+    <span class="tarjeta-titulo">Origen de los datos</span>
+    <span class="icono">✓</span>
+</div>
+<div class="numero"><strong>Disponible</strong></div>
+
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Delitos por tipo y zona</h3>
+                    <div class="panel-subtitulo">
+                        La gráfica se actualiza al cambiar los filtros.
+                    </div>
+                    <div class="grafica">
+                        <canvas id="graficaDelitosTipoZona"></canvas>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h3>Detalle de delitos por tipo y zona</h3>
+                    <div class="panel-subtitulo">
+                        Resultados agrupados devueltos por la API.
+                    </div>
+
+                    <div class="tabla-contenedor">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>N.º</th>
+                                    <th>Tipo de delito</th>
+                                    <th>Zona</th>
+                                    <th>Cantidad de delitos</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaDelitosTipoZona">
+                                <tr>
+                                    <td colspan="4">Esperando datos...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+
+            
+
+            <footer>
+                Seguridad SJL · DataMart Analytics
+            </footer>
+        </div>
+    </main>
+</div>
+
+<script>
+    const API_URL = "http://127.0.0.1:8000";
+
+    const campoFecha = document.getElementById("fecha");
+    const boton = document.getElementById("consultar");
+    const mensaje = document.getElementById("mensaje");
+
+    let grafica = null;
+    let graficaComparativa = null;
+    let graficaDelitosPanel = null;
+
+    const colores = [
+        "#22d3ee",
+        "#60a5fa",
+        "#a78bfa",
+        "#34d399",
+        "#fbbf24"
+    ];
+
+    // FUNCIONES GENERALES
+
+    function formatoNumero(valor) {
+        const numero = Number(valor);
+
+        if (!Number.isFinite(numero)) {
+            return "—";
+        }
+
+        return new Intl.NumberFormat("es-PE", {
+            maximumFractionDigits: 2
+        }).format(numero);
+    }
+
+    async function obtenerJSON(url) {
+        const respuesta = await fetch(url);
+        let datos;
+
+        try {
+            datos = await respuesta.json();
+        } catch {
+            throw new Error("La API no devolvió una respuesta JSON válida.");
+        }
+
+        if (!respuesta.ok) {
+            throw new Error(datos.detail || `Error HTTP ${respuesta.status}`);
+        }
+
+        return datos;
+    }
+
+    function mostrarError(texto) {
+        mensaje.textContent = texto;
+        mensaje.classList.add("error");
+    }
+
+    // CONSULTAR ESTIMACIONES POR FECHA
+
+    async function consultarEstimaciones() {
+        const fecha = campoFecha.value;
+
+        if (!fecha) {
+            mostrarError("Selecciona una fecha para consultar.");
+            return;
+        }
+
+        boton.disabled = true;
+        mensaje.classList.remove("error");
+        mensaje.textContent = "Consultando las estimaciones...";
+
+        try {
+            const url =
+                `${API_URL}/modelo/grafica?fecha=${encodeURIComponent(fecha)}`;
+
+            const datos = await obtenerJSON(url);
+
+            if (
+                !Array.isArray(datos.etiquetas) ||
+                !Array.isArray(datos.cantidades) ||
+                !Array.isArray(datos.estimaciones_decimales)
+            ) {
+                throw new Error(
+                    "La respuesta no contiene etiquetas, cantidades y estimaciones decimales."
+                );
+            }
+
+            if (
+                datos.etiquetas.length !== datos.cantidades.length ||
+                datos.etiquetas.length !== datos.estimaciones_decimales.length
+            ) {
+                throw new Error(
+                    "Las etiquetas y las estimaciones tienen longitudes distintas."
+                );
+            }
+
+            const cantidades = datos.cantidades.map(Number);
+            const decimales = datos.estimaciones_decimales.map(Number);
+
+            if (
+                cantidades.some(v => !Number.isFinite(v)) ||
+                decimales.some(v => !Number.isFinite(v))
+            ) {
+                throw new Error("La API devolvió valores de estimación no válidos.");
+            }
+
+            // Indicadores
+            const totalEntero = cantidades.reduce((suma, valor) => suma + valor, 0);
+            const totalDecimal = decimales.reduce((suma, valor) => suma + valor, 0);
+
+            document.getElementById("totalZonas").textContent =
+                datos.etiquetas.length;
+
+            document.getElementById("totalEstimado").textContent =
+                formatoNumero(totalEntero);
+
+            document.getElementById("totalDecimal").textContent =
+                totalDecimal.toFixed(2);
+
+            const fechaResultado = datos.fecha || fecha;
+            const [anio, mes, dia] = fechaResultado.split("-");
+
+            document.getElementById("fechaResultado").textContent =
+                `${dia}/${mes}/${anio}`;
+
+            // Gráfica de cantidades enteras
+            const contexto =
+                document.getElementById("graficaZonas").getContext("2d");
+
+            if (grafica) {
+                grafica.destroy();
+            }
+
+            grafica = new Chart(contexto, {
+                type: "bar",
+                data: {
+                    labels: datos.etiquetas,
+                    datasets: [{
+                        label: "Cantidad estimada",
+                        data: cantidades,
+                        backgroundColor: datos.etiquetas.map(
+                            (_, i) => colores[i % colores.length]
+                        ),
+                        borderRadius: 7,
+                        maxBarThickness: 58
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0,
+                                stepSize: 1,
+                                color: "#94a3b8"
+                            },
+                            grid: {
+                                color: "#263449"
+                            },
+                            title: {
+                                display: true,
+                                text: "Cantidad estimada",
+                                color: "#94a3b8"
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: "#cbd5e1"
+                            },
+                            grid: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: "Zona",
+                                color: "#94a3b8"
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: contexto =>
+                                    ` Cantidad estimada: ${contexto.raw}`
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfica comparativa de valores enteros y decimales
+            const contextoComparativa =
+                document.getElementById("graficaComparativa").getContext("2d");
+
+            if (graficaComparativa) {
+                graficaComparativa.destroy();
+            }
+
+            graficaComparativa = new Chart(contextoComparativa, {
+                type: "bar",
+                data: {
+                    labels: datos.etiquetas,
+                    datasets: [
+                        {
+                            label: "Cantidad entera",
+                            data: cantidades,
+                            backgroundColor: "#22d3ee",
+                            borderRadius: 5,
+                            maxBarThickness: 42
+                        },
+                        {
+                            label: "Estimación decimal",
+                            data: decimales,
+                            backgroundColor: "#a78bfa",
+                            borderRadius: 5,
+                            maxBarThickness: 42
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: "#94a3b8"
+                            },
+                            grid: {
+                                color: "#263449"
+                            },
+                            title: {
+                                display: true,
+                                text: "Valor estimado",
+                                color: "#94a3b8"
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: "#cbd5e1"
+                            },
+                            grid: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: "Zona",
+                                color: "#94a3b8"
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: "#cbd5e1"
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: contexto => {
+                                    const valor = Number(contexto.raw);
+
+                                    if (
+                                        contexto.dataset.label === "Estimación decimal"
+                                    ) {
+                                        return ` ${contexto.dataset.label}: ${valor.toFixed(2)}`;
+                                    }
+
+                                    return ` ${contexto.dataset.label}: ${valor}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Distribución por zona
+            const lista = document.getElementById("listaZonas");
+            lista.replaceChildren();
+
+            const maximo = Math.max(1, ...cantidades);
+
+            datos.etiquetas.forEach((zona, indice) => {
+                const fila = document.createElement("div");
+
+                const encabezado = document.createElement("div");
+                encabezado.className = "zona-fila";
+
+                const nombre = document.createElement("span");
+                nombre.textContent = zona;
+
+                const valor = document.createElement("strong");
+                valor.textContent = cantidades[indice];
+
+                encabezado.append(nombre, valor);
+
+                const pista = document.createElement("div");
+                pista.className = "pista";
+
+                const relleno = document.createElement("div");
+                relleno.className = "relleno";
+
+                relleno.style.width =
+                    `${Math.max(0, cantidades[indice] / maximo * 100)}%`;
+
+                relleno.style.backgroundColor =
+                    colores[indice % colores.length];
+
+                pista.appendChild(relleno);
+                fila.append(encabezado, pista);
+                lista.appendChild(fila);
+            });
+
+            // Tabla de resultados
+            const cuerpo = document.getElementById("tablaResultados");
+            cuerpo.replaceChildren();
+
+            datos.etiquetas.forEach((zona, indice) => {
+                const fila = document.createElement("tr");
+                const fueraDelPeriodo = fecha > "2026-07-31";
+
+                const celdas = [
+                    zona,
+                    cantidades[indice],
+                    decimales[indice].toFixed(2),
+                    "01/01/2026 – 31/07/2026",
+                    fueraDelPeriodo
+                        ? "Estimación futura"
+                        : "Dentro del período"
+                ];
+
+                celdas.forEach((texto, posicion) => {
+                    const celda = document.createElement("td");
+                    celda.textContent = texto;
+
+                    if (posicion === 4) {
+                        const etiqueta = document.createElement("span");
+                        etiqueta.className = fueraDelPeriodo ? "pill futura" : "pill";
+                        etiqueta.textContent = texto;
+                        celda.replaceChildren(etiqueta);
+                    }
+
+                    fila.appendChild(celda);
+                });
+
+                cuerpo.appendChild(fila);
+            });
+
+            mensaje.textContent =
+                `Consulta completada correctamente para ${fechaResultado}.`;
+
+        } catch (error) {
+            mostrarError(
+                `No se pudieron cargar las estimaciones: ${error.message}. ` +
+                "Verifica que FastAPI esté ejecutándose en el puerto 8000."
+            );
+        } finally {
+            boton.disabled = false;
+        }
+    }
+
+    // CONSULTAR MÉTRICAS DEL MODELO
+
+    async function consultarMetricas() {
+        const estado = document.getElementById("estadoMetricas");
+
+        estado.classList.remove("error");
+        estado.textContent = "Consultando las métricas del modelo...";
+
+        try {
+            const datos = await obtenerJSON(`${API_URL}/modelo/metricas`);
+
+            if (!datos.disponible || !datos.metricas) {
+                estado.textContent =
+                    datos.mensaje ||
+                    "No hay métricas disponibles. Ejecuta POST /modelo/entrenar en la documentación de la API.";
+                return;
+            }
+
+            const m = datos.metricas;
+
+            document.getElementById("metricaMAE").textContent =
+                Number(m.mae).toFixed(3);
+
+            document.getElementById("metricaRMSE").textContent =
+                Number(m.rmse).toFixed(3);
+
+            document.getElementById("filasEntrenamiento").textContent =
+                Number(m.filas_entrenamiento).toLocaleString("es-PE");
+
+            document.getElementById("filasEvaluacion").textContent =
+                Number(m.filas_evaluacion).toLocaleString("es-PE");
+
+            const fechaElemento = document.getElementById("fechaUltima");
+
+            if (datos.fecha_ultima) {
+                const [anio, mes, dia] = datos.fecha_ultima.split("-");
+                fechaElemento.textContent = `${dia}/${mes}/${anio}`;
+            } else {
+                fechaElemento.textContent = "No disponible";
+            }
+
+            estado.textContent =
+                `Métricas cargadas. Origen: ${datos.origen_datos || "no especificado"}.`;
+
+        } catch (error) {
+            estado.classList.add("error");
+            estado.textContent =
+                `No se pudieron cargar las métricas: ${error.message}. ` +
+                "Verifica que FastAPI esté ejecutándose en el puerto 8000.";
+        }
+    }
+
+    // PANEL AGREGADO: ANÁLISIS POR TIPO DE DELITO Y ZONA
+
+    const selectTipoDelito = document.getElementById("filtroTipoDelito");
+    const selectZonaDelito = document.getElementById("filtroZona");
+    const estadoDelitos = document.getElementById("estadoDelitos");
+
+    async function cargarFiltrosDelitos() {
+        try {
+            const datos = await obtenerJSON(`${API_URL}/datos/filtros`);
+
+            const tipos = Array.isArray(datos.tipos_delito)
+                ? datos.tipos_delito
+                : [];
+
+            const zonas = Array.isArray(datos.zonas)
+                ? datos.zonas
+                : [];
+
+            selectTipoDelito.replaceChildren(
+                new Option("Todos los delitos", "")
+            );
+
+            selectZonaDelito.replaceChildren(
+                new Option("Todas las zonas", "")
+            );
+
+            tipos.forEach(tipo => {
+                selectTipoDelito.add(
+                    new Option(String(tipo), String(tipo))
+                );
+            });
+
+            zonas.forEach(zona => {
+                selectZonaDelito.add(
+                    new Option(String(zona), String(zona))
+                );
+            });
+
+            await filtrarDelitosPanel();
+
+        } catch (error) {
+            estadoDelitos.classList.add("error");
+            estadoDelitos.textContent =
+                `No se pudieron cargar los filtros: ${error.message}. ` +
+                "Verifica que exista el endpoint /datos/filtros.";
+        }
+    }
+
+    async function filtrarDelitosPanel() {
+        estadoDelitos.classList.remove("error");
+        estadoDelitos.textContent = "Consultando delitos...";
+
+        const parametros = new URLSearchParams();
+
+        if (selectTipoDelito.value) {
+            parametros.set("tipo_delito", selectTipoDelito.value);
+        }
+
+        if (selectZonaDelito.value) {
+            parametros.set("zona", selectZonaDelito.value);
+        }
+
+        try {
+            const datos = await obtenerJSON(
+                `${API_URL}/datos/filtrar?${parametros.toString()}`
+            );
+
+            const filas = Array.isArray(datos.resultados)
+                ? datos.resultados
+                : [];
+
+            document.getElementById("totalDelitosPanel").textContent =
+                formatoNumero(datos.total_delitos ?? 0);
+
+            document.getElementById("totalCombinacionesPanel").textContent =
+                formatoNumero(datos.total_registros ?? filas.length);
+
+            document.getElementById("totalTiposPanel").textContent =
+                new Set(filas.map(fila => fila.tipo_delito)).size;
+
+            // Actualizar tabla de delitos
+            const tbody = document.getElementById("tablaDelitosTipoZona");
+            tbody.replaceChildren();
+
+            if (filas.length === 0) {
+                const tr = document.createElement("tr");
+                const td = document.createElement("td");
+
+                td.colSpan = 4;
+                td.textContent = "No hay resultados para estos filtros.";
+
+                tr.appendChild(td);
+                tbody.appendChild(tr);
+            } else {
+                filas.forEach((fila, indice) => {
+                    const tr = document.createElement("tr");
+
+                    const valores = [
+                        indice + 1,
+                        fila.tipo_delito ?? "Sin tipo",
+                        fila.zona ?? "Sin zona",
+                        formatoNumero(fila.cantidad ?? 0)
+                    ];
+
+                    valores.forEach(valor => {
+                        const td = document.createElement("td");
+                        td.textContent = valor;
+                        tr.appendChild(td);
+                    });
+
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Actualizar gráfica de delitos
+            if (graficaDelitosPanel) {
+                graficaDelitosPanel.destroy();
+            }
+
+            const contexto = document
+                .getElementById("graficaDelitosTipoZona")
+                .getContext("2d");
+
+            graficaDelitosPanel = new Chart(contexto, {
+                type: "bar",
+                data: {
+                    labels: filas.map(fila =>
+                        `${fila.tipo_delito ?? "Sin tipo"} — ${fila.zona ?? "Sin zona"}`
+                    ),
+                    datasets: [{
+                        label: "Cantidad de delitos",
+                        data: filas.map(fila => Number(fila.cantidad ?? 0)),
+                        backgroundColor: "rgba(34, 211, 238, 0.65)",
+                        borderColor: "#22d3ee",
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: "y",
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: "#cbd5e1"
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: contexto =>
+                                    ` Delitos: ${formatoNumero(contexto.raw)}`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: "#94a3b8",
+                                precision: 0
+                            },
+                            grid: {
+                                color: "#263449"
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: "#cbd5e1"
+                            },
+                            grid: {
+                                color: "rgba(148, 163, 184, 0.08)"
+                            }
+                        }
+                    }
+                }
+            });
+
+            estadoDelitos.textContent =
+                `Consulta completada: ${formatoNumero(datos.total_registros ?? filas.length)} combinaciones y ${formatoNumero(datos.total_delitos ?? 0)} delitos. Los datos son simulados.`;
+
+        } catch (error) {
+            estadoDelitos.classList.add("error");
+            estadoDelitos.textContent =
+                `Error al consultar /datos/filtrar: ${error.message}. ` +
+                "Verifica que FastAPI esté activo y que el endpoint exista.";
+        }
+    }
+
+    // EVENTOS E INICIALIZACIÓN
+
+    boton.addEventListener("click", consultarEstimaciones);
+
+    document.getElementById("btnFiltrarDelitos")
+        .addEventListener("click", filtrarDelitosPanel);
+
+    document.getElementById("btnLimpiarDelitos")
+        .addEventListener("click", () => {
+            selectTipoDelito.value = "";
+            selectZonaDelito.value = "";
+            filtrarDelitosPanel();
+        });
+
+    selectTipoDelito.addEventListener("change", filtrarDelitosPanel);
+    selectZonaDelito.addEventListener("change", filtrarDelitosPanel);
+
+    consultarEstimaciones();
+    consultarMetricas();
+    cargarFiltrosDelitos();
+</script>
+</body>
+</html>
