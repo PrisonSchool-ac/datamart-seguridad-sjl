@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -529,7 +529,7 @@
 
     <aside>
         <div class="marca">
-            <div class="logo">⌖</div>
+            <div class="logo">âŒ–</div>
             <div>
                 <h2>SEGURIDAD SJL</h2>
                 <small>DataMart Analytics</small>
@@ -537,29 +537,29 @@
         </div>
 
         <div class="etiqueta-menu">PRINCIPAL</div>
-        <a class="menu activo" href="#inicio">▦ &nbsp; Resumen general</a>
-        <a class="menu" href="#comparacion">▥ &nbsp; Comparación por zona</a>
-        <a class="menu" href="#comparacion-estimaciones">▤ &nbsp; Comparación de estimaciones</a>
-        <a class="menu" href="#resultados">☷ &nbsp; Tabla de resultados</a>
-        <a class="menu" href="#metricas">∑ &nbsp; Evaluación del modelo</a>
+        <a class="menu activo" href="#inicio">â–¦ &nbsp; Resumen general</a>
+        <a class="menu" href="#comparacion">â–¥ &nbsp; ComparaciÃ³n por zona</a>
+        <a class="menu" href="#comparacion-estimaciones">â–¤ &nbsp; ComparaciÃ³n de estimaciones</a>
+        <a class="menu" href="#resultados">â˜· &nbsp; Tabla de resultados</a>
+        <a class="menu" href="#metricas">âˆ‘ &nbsp; EvaluaciÃ³n del modelo</a>
 
-        <div class="etiqueta-menu">ANÁLISIS ADICIONAL</div>
-        <a class="menu" href="#analisis-delitos">▤ &nbsp; Análisis de delitos</a>
+        <div class="etiqueta-menu">ANÃLISIS ADICIONAL</div>
+        <a class="menu" href="#analisis-delitos">â–¤ &nbsp; AnÃ¡lisis de delitos</a>
 
         <div class="etiqueta-menu">SISTEMA</div>
         <a class="menu"
-           href="http://127.0.0.1:8000/docs"
+           href="http://3.142.164.91:8000/docs"
            target="_blank"
-           rel="noopener">↗ &nbsp; Documentación API</a>
+           rel="noopener">â†— &nbsp; DocumentaciÃ³n API</a>
     </aside>
 
     <main id="inicio">
         <div class="barra-superior">
             <div>
                 <h1>Dashboard de Seguridad</h1>
-                <p>San Juan de Lurigancho · Panel de análisis</p>
+                <p>San Juan de Lurigancho Â· Panel de anÃ¡lisis</p>
             </div>
-            <span class="estado">● DATOS SIMULADOS</span>
+            <span class="estado">â— DATOS SIMULADOS</span>
         </div>
 
         <div class="contenido">
@@ -577,7 +577,7 @@
                     <input type="date" id="fecha" value="2026-10-27">
                 </div>
                 <button id="consultar" type="button">
-                    ↻ &nbsp; Consultar estimaciones
+                    â†» &nbsp; Consultar estimaciones
                 </button>
             </section>
 
@@ -585,44 +585,44 @@
                 <div class="tarjeta">
                     <div class="tarjeta-cabecera">
                         <span class="tarjeta-titulo">Zonas consultadas</span>
-                        <span class="icono">⌖</span>
+                        <span class="icono">âŒ–</span>
                     </div>
-                    <div class="numero" id="totalZonas">—</div>
+                    <div class="numero" id="totalZonas">â€”</div>
                     <div class="nota">Zonas incluidas en la consulta</div>
                 </div>
 
                 <div class="tarjeta">
                     <div class="tarjeta-cabecera">
                         <span class="tarjeta-titulo">Cantidad estimada</span>
-                        <span class="icono">▥</span>
+                        <span class="icono">â–¥</span>
                     </div>
-                    <div class="numero" id="totalEstimado">—</div>
+                    <div class="numero" id="totalEstimado">â€”</div>
                     <div class="nota">Suma de cantidades enteras</div>
                 </div>
 
                 <div class="tarjeta">
                     <div class="tarjeta-cabecera">
                         <span class="tarjeta-titulo">Suma decimal</span>
-                        <span class="icono">∑</span>
+                        <span class="icono">âˆ‘</span>
                     </div>
-                    <div class="numero" id="totalDecimal">—</div>
+                    <div class="numero" id="totalDecimal">â€”</div>
                     <div class="nota">Suma de las salidas decimales</div>
                 </div>
 
                 <div class="tarjeta">
                     <div class="tarjeta-cabecera">
                         <span class="tarjeta-titulo">Fecha consultada</span>
-                        <span class="icono">▦</span>
+                        <span class="icono">â–¦</span>
                     </div>
                     <div class="numero" id="fechaResultado"
-                         style="font-size:20px">—</div>
+                         style="font-size:20px">â€”</div>
                     <div class="nota">Fecha seleccionada</div>
                 </div>
             </section>
 
             <section class="rejilla" id="comparacion">
                 <div class="panel">
-                    <h3>Comparación por zona</h3>
+                    <h3>ComparaciÃ³n por zona</h3>
                     <div class="panel-subtitulo">
                         Cantidad entera estimada para la fecha seleccionada
                     </div>
@@ -632,7 +632,7 @@
                 </div>
 
                 <div class="panel">
-                    <h3>Distribución por zona</h3>
+                    <h3>DistribuciÃ³n por zona</h3>
                     <div class="panel-subtitulo">
                         Vista relativa de las cantidades estimadas
                     </div>
@@ -643,9 +643,9 @@
             </section>
 
             <section class="panel" id="comparacion-estimaciones">
-                <h3>Comparación de estimaciones enteras y decimales</h3>
+                <h3>ComparaciÃ³n de estimaciones enteras y decimales</h3>
                 <div class="panel-subtitulo">
-                    Comparación de la cantidad entera presentada y el valor
+                    ComparaciÃ³n de la cantidad entera presentada y el valor
                     decimal generado por el modelo para cada zona.
                 </div>
                 <div class="grafica">
@@ -663,8 +663,8 @@
                             <tr>
                                 <th>Zona</th>
                                 <th>Cantidad estimada</th>
-                                <th>Estimación decimal</th>
-                                <th>Período de entrenamiento</th>
+                                <th>EstimaciÃ³n decimal</th>
+                                <th>PerÃ­odo de entrenamiento</th>
                                 <th>Estado de fecha</th>
                             </tr>
                         </thead>
@@ -679,56 +679,56 @@
                 <p id="mensaje" role="status" aria-live="polite"></p>
             </section>
 
-            <!-- MÉTRICAS ORIGINALES -->
+            <!-- MÃ‰TRICAS ORIGINALES -->
             <section class="panel" id="metricas">
-                <h3>Evaluación del modelo de predicción</h3>
+                <h3>EvaluaciÃ³n del modelo de predicciÃ³n</h3>
                 <div class="panel-subtitulo">
-                    Métricas obtenidas durante la evaluación del modelo.
+                    MÃ©tricas obtenidas durante la evaluaciÃ³n del modelo.
                 </div>
 
                 <div class="metricas-grid">
                     <div class="metrica-modelo">
                         <div class="nombre">MAE</div>
-                        <div class="valor" id="metricaMAE">—</div>
+                        <div class="valor" id="metricaMAE">â€”</div>
                         <div class="detalle">Error absoluto medio.</div>
                     </div>
 
                     <div class="metrica-modelo">
                         <div class="nombre">RMSE</div>
-                        <div class="valor" id="metricaRMSE">—</div>
-                        <div class="detalle">Raíz del error cuadrático medio.</div>
+                        <div class="valor" id="metricaRMSE">â€”</div>
+                        <div class="detalle">RaÃ­z del error cuadrÃ¡tico medio.</div>
                     </div>
 
                     <div class="metrica-modelo">
                         <div class="nombre">Filas de entrenamiento</div>
-                        <div class="valor" id="filasEntrenamiento">—</div>
+                        <div class="valor" id="filasEntrenamiento">â€”</div>
                         <div class="detalle">Registros usados para ajustar el modelo.</div>
                     </div>
 
                     <div class="metrica-modelo">
-                        <div class="nombre">Filas de evaluación</div>
-                        <div class="valor" id="filasEvaluacion">—</div>
-                        <div class="detalle">Registros utilizados para calcular las métricas.</div>
+                        <div class="nombre">Filas de evaluaciÃ³n</div>
+                        <div class="valor" id="filasEvaluacion">â€”</div>
+                        <div class="detalle">Registros utilizados para calcular las mÃ©tricas.</div>
                     </div>
                 </div>
 
                 <p id="estadoMetricas" role="status" aria-live="polite">
-                    Consultando métricas del modelo...
+                    Consultando mÃ©tricas del modelo...
                 </p>
 
                 <p class="nota">
-                    Última fecha disponible en los datos:
-                    <strong id="fechaUltima">—</strong>
+                    Ãšltima fecha disponible en los datos:
+                    <strong id="fechaUltima">â€”</strong>
                 </p>
             </section>
 
             <!-- PANEL NUEVO AGREGADO -->
             <section class="panel" id="analisis-delitos">
-                <h3>Panel de análisis de delitos por tipo y zona geográfica</h3>
+                <h3>Panel de anÃ¡lisis de delitos por tipo y zona geogrÃ¡fica</h3>
 
                 <div class="panel-subtitulo">
                     Consulta y compara la cantidad de delitos agrupados por
-                    tipo de delito y zona geográfica. Puedes usar uno o ambos filtros.
+                    tipo de delito y zona geogrÃ¡fica. Puedes usar uno o ambos filtros.
                 </div>
 
                 <section class="filtros">
@@ -740,7 +740,7 @@
                     </div>
 
                     <div class="campo">
-                        <label for="filtroZona">ZONA GEOGRÁFICA</label>
+                        <label for="filtroZona">ZONA GEOGRÃFICA</label>
                         <select id="filtroZona">
                             <option value="">Todas las zonas</option>
                         </select>
@@ -765,34 +765,34 @@
                     <div class="tarjeta">
                         <div class="tarjeta-cabecera">
                             <span class="tarjeta-titulo">Total de delitos</span>
-                            <span class="icono">▦</span>
+                            <span class="icono">â–¦</span>
                         </div>
-                        <div class="numero" id="totalDelitosPanel">—</div>
+                        <div class="numero" id="totalDelitosPanel">â€”</div>
                         <div class="nota">Suma de las cantidades encontradas</div>
                     </div>
 
                     <div class="tarjeta">
                         <div class="tarjeta-cabecera">
                             <span class="tarjeta-titulo">Combinaciones tipo-zona</span>
-                            <span class="icono">▥</span>
+                            <span class="icono">â–¥</span>
                         </div>
-                        <div class="numero" id="totalCombinacionesPanel">—</div>
+                        <div class="numero" id="totalCombinacionesPanel">â€”</div>
                         <div class="nota">Combinaciones devueltas por la consulta</div>
                     </div>
 
                     <div class="tarjeta">
                         <div class="tarjeta-cabecera">
                             <span class="tarjeta-titulo">Tipos encontrados</span>
-                            <span class="icono">∑</span>
+                            <span class="icono">âˆ‘</span>
                         </div>
-                        <div class="numero" id="totalTiposPanel">—</div>
+                        <div class="numero" id="totalTiposPanel">â€”</div>
                         <div class="nota">Tipos distintos en los resultados filtrados</div>
                     </div>
 
                     <div class="tarjeta">
                         <div class="tarjeta-cabecera">
     <span class="tarjeta-titulo">Origen de los datos</span>
-    <span class="icono">✓</span>
+    <span class="icono">âœ“</span>
 </div>
 <div class="numero"><strong>Disponible</strong></div>
 
@@ -802,7 +802,7 @@
                 <section class="panel">
                     <h3>Delitos por tipo y zona</h3>
                     <div class="panel-subtitulo">
-                        La gráfica se actualiza al cambiar los filtros.
+                        La grÃ¡fica se actualiza al cambiar los filtros.
                     </div>
                     <div class="grafica">
                         <canvas id="graficaDelitosTipoZona"></canvas>
@@ -819,7 +819,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>N.º</th>
+                                    <th>N.Âº</th>
                                     <th>Tipo de delito</th>
                                     <th>Zona</th>
                                     <th>Cantidad de delitos</th>
@@ -838,14 +838,14 @@
             
 
             <footer>
-                Seguridad SJL · DataMart Analytics
+                Seguridad SJL Â· DataMart Analytics
             </footer>
         </div>
     </main>
 </div>
 
 <script>
-    const API_URL = "http://127.0.0.1:8000";
+    const API_URL = "http://3.142.164.91:8000";
 
     const campoFecha = document.getElementById("fecha");
     const boton = document.getElementById("consultar");
@@ -869,7 +869,7 @@
         const numero = Number(valor);
 
         if (!Number.isFinite(numero)) {
-            return "—";
+            return "â€”";
         }
 
         return new Intl.NumberFormat("es-PE", {
@@ -884,7 +884,7 @@
         try {
             datos = await respuesta.json();
         } catch {
-            throw new Error("La API no devolvió una respuesta JSON válida.");
+            throw new Error("La API no devolviÃ³ una respuesta JSON vÃ¡lida.");
         }
 
         if (!respuesta.ok) {
@@ -945,7 +945,7 @@
                 cantidades.some(v => !Number.isFinite(v)) ||
                 decimales.some(v => !Number.isFinite(v))
             ) {
-                throw new Error("La API devolvió valores de estimación no válidos.");
+                throw new Error("La API devolviÃ³ valores de estimaciÃ³n no vÃ¡lidos.");
             }
 
             // Indicadores
@@ -967,7 +967,7 @@
             document.getElementById("fechaResultado").textContent =
                 `${dia}/${mes}/${anio}`;
 
-            // Gráfica de cantidades enteras
+            // GrÃ¡fica de cantidades enteras
             const contexto =
                 document.getElementById("graficaZonas").getContext("2d");
 
@@ -1037,7 +1037,7 @@
                 }
             });
 
-            // Gráfica comparativa de valores enteros y decimales
+            // GrÃ¡fica comparativa de valores enteros y decimales
             const contextoComparativa =
                 document.getElementById("graficaComparativa").getContext("2d");
 
@@ -1058,7 +1058,7 @@
                             maxBarThickness: 42
                         },
                         {
-                            label: "Estimación decimal",
+                            label: "EstimaciÃ³n decimal",
                             data: decimales,
                             backgroundColor: "#a78bfa",
                             borderRadius: 5,
@@ -1111,7 +1111,7 @@
                                     const valor = Number(contexto.raw);
 
                                     if (
-                                        contexto.dataset.label === "Estimación decimal"
+                                        contexto.dataset.label === "EstimaciÃ³n decimal"
                                     ) {
                                         return ` ${contexto.dataset.label}: ${valor.toFixed(2)}`;
                                     }
@@ -1124,7 +1124,7 @@
                 }
             });
 
-            // Distribución por zona
+            // DistribuciÃ³n por zona
             const lista = document.getElementById("listaZonas");
             lista.replaceChildren();
 
@@ -1173,10 +1173,10 @@
                     zona,
                     cantidades[indice],
                     decimales[indice].toFixed(2),
-                    "01/01/2026 – 31/07/2026",
+                    "01/01/2026 â€“ 31/07/2026",
                     fueraDelPeriodo
-                        ? "Estimación futura"
-                        : "Dentro del período"
+                        ? "EstimaciÃ³n futura"
+                        : "Dentro del perÃ­odo"
                 ];
 
                 celdas.forEach((texto, posicion) => {
@@ -1202,20 +1202,20 @@
         } catch (error) {
             mostrarError(
                 `No se pudieron cargar las estimaciones: ${error.message}. ` +
-                "Verifica que FastAPI esté ejecutándose en el puerto 8000."
+                "Verifica que FastAPI estÃ© ejecutÃ¡ndose en el puerto 8000."
             );
         } finally {
             boton.disabled = false;
         }
     }
 
-    // CONSULTAR MÉTRICAS DEL MODELO
+    // CONSULTAR MÃ‰TRICAS DEL MODELO
 
     async function consultarMetricas() {
         const estado = document.getElementById("estadoMetricas");
 
         estado.classList.remove("error");
-        estado.textContent = "Consultando las métricas del modelo...";
+        estado.textContent = "Consultando las mÃ©tricas del modelo...";
 
         try {
             const datos = await obtenerJSON(`${API_URL}/modelo/metricas`);
@@ -1223,7 +1223,7 @@
             if (!datos.disponible || !datos.metricas) {
                 estado.textContent =
                     datos.mensaje ||
-                    "No hay métricas disponibles. Ejecuta POST /modelo/entrenar en la documentación de la API.";
+                    "No hay mÃ©tricas disponibles. Ejecuta POST /modelo/entrenar en la documentaciÃ³n de la API.";
                 return;
             }
 
@@ -1251,17 +1251,17 @@
             }
 
             estado.textContent =
-                `Métricas cargadas. Origen: ${datos.origen_datos || "no especificado"}.`;
+                `MÃ©tricas cargadas. Origen: ${datos.origen_datos || "no especificado"}.`;
 
         } catch (error) {
             estado.classList.add("error");
             estado.textContent =
-                `No se pudieron cargar las métricas: ${error.message}. ` +
-                "Verifica que FastAPI esté ejecutándose en el puerto 8000.";
+                `No se pudieron cargar las mÃ©tricas: ${error.message}. ` +
+                "Verifica que FastAPI estÃ© ejecutÃ¡ndose en el puerto 8000.";
         }
     }
 
-    // PANEL AGREGADO: ANÁLISIS POR TIPO DE DELITO Y ZONA
+    // PANEL AGREGADO: ANÃLISIS POR TIPO DE DELITO Y ZONA
 
     const selectTipoDelito = document.getElementById("filtroTipoDelito");
     const selectZonaDelito = document.getElementById("filtroZona");
@@ -1375,7 +1375,7 @@
                 });
             }
 
-            // Actualizar gráfica de delitos
+            // Actualizar grÃ¡fica de delitos
             if (graficaDelitosPanel) {
                 graficaDelitosPanel.destroy();
             }
@@ -1388,7 +1388,7 @@
                 type: "bar",
                 data: {
                     labels: filas.map(fila =>
-                        `${fila.tipo_delito ?? "Sin tipo"} — ${fila.zona ?? "Sin zona"}`
+                        `${fila.tipo_delito ?? "Sin tipo"} â€” ${fila.zona ?? "Sin zona"}`
                     ),
                     datasets: [{
                         label: "Cantidad de delitos",
@@ -1446,11 +1446,11 @@
             estadoDelitos.classList.add("error");
             estadoDelitos.textContent =
                 `Error al consultar /datos/filtrar: ${error.message}. ` +
-                "Verifica que FastAPI esté activo y que el endpoint exista.";
+                "Verifica que FastAPI estÃ© activo y que el endpoint exista.";
         }
     }
 
-    // EVENTOS E INICIALIZACIÓN
+    // EVENTOS E INICIALIZACIÃ“N
 
     boton.addEventListener("click", consultarEstimaciones);
 
